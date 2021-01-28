@@ -1,4 +1,6 @@
 export default {
+    //开启命名空间
+    namespaced: true,
     state: {
         //是否折叠
         isCollapse: false,

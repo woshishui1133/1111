@@ -75,7 +75,7 @@ export default {
         return this.$store.state.app.mainTabsActiveName
       },
       set(val) {
-        this.$store.commit('updateMainTabsActiveName', val)
+        this.$store.commit('app/updateMainTabsActiveName', val)
       },
     }
   },
@@ -183,7 +183,7 @@ export default {
     top: 45px;
     left: 5px;
     right: 5px;
-    bottom: 5px;
+    bottom: 12px;
     padding: 5px;
     // background: rgba(209, 212, 212, 0.5);
   }

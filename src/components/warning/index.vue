@@ -1,30 +1,38 @@
 <template>
-  <div id="warBackground" v-show="boStop" @click="moveStart()">
+  <div id="warBackground" v-show="EndBoStop" @click="moveStart()">
     <div class="war_com">
-      <p class="war_text">游戏结束</p>
+      <!-- <p class="war_text">游戏结束</p> -->
+      <img :src="require('../../assets/image'+image[1])" alt />
     </div>
   </div>
 </template>
 
 <script>
+import { mapState, mapMutations } from 'vuex'
 export default {
-  props: {
-    boStop: {
-      type: Boolean
-    }
-  },
+
   data() {
     return {
+      image: [
+        '/image1.jpg',
+        '/image2.jpg',
+        '/image3.jpg',
+        '/image4.jpg',
+        '/image5.jpg',
+        '/image6.jpg',
+        '/image7.jpg',
+      ]
+    }
+  },
+  computed: {
+    ...mapState('end', {
+      EndBoStop: "boStop"
+    })
 
-    }
   },
-  mounted() {
-    
-  },
+  mounted() { console.log(this.image[2]) },
   methods: {
-    moveStart() {
-      this.$emit("isStart");
-    }
+    ...mapMutations('end', { moveStart: 'moveStart' })
   },
 
 }
@@ -46,8 +54,6 @@ export default {
   text-align: center;
   line-height: 300px;
   border-radius: 8px;
-  background-image: url("../../assets/image/stop.jpg");
-  background-size: 100% 100%;
 
   .war_text {
     font-size: 40px;

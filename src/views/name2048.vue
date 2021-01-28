@@ -26,7 +26,7 @@
         >{{item4?item4:''}}</span>
       </div>
     </div>
-    <is-Warning :boStop="boStop" @isStart="isStart"></is-Warning>
+    <is-Warning></is-Warning>
   </div>
 </template>
 
@@ -82,9 +82,9 @@ export default {
   },
   mounted() {
     let _this = this;
- 
-      _this.newgame();
-   
+
+    _this.newgame();
+
 
 
     document.onkeydown = function (e) {
@@ -108,16 +108,11 @@ export default {
       }
       //判断游戏是否结束
       if (!(_this.isMoveRight() || _this.isMoveLeft() || _this.isMoveDown() || _this.isMoveUp())) {
-        _this.boStop = true;
+        _this.$store.commit('end/moveEnd')
       }
     }
   },
   methods: {
-
-    isStart() {
-      this.boStop = false;
-      this.newgame();
-    },
 
     newgame() {
       this.init();

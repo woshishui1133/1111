@@ -1,6 +1,6 @@
 <template>
-  <div class="tetris_wrapper" ref="test" @click="initializationGrid">
-    <button @click="deathRule">测试</button>
+  <div class="tetris_wrapper" ref="test">
+    <p>{{integral}}</p>
     <div class="game_wrapper" ref="container">
       <div class="block-group" v-for="(item,index) in structureArray" :key="index">
         <div
@@ -11,23 +11,29 @@
         ></div>
       </div>
     </div>
+    <is-Warning></is-Warning>
   </div>
 </template>
 
 <script>
+import isWarning from '../components/warning/index'
 export default {
   data() {
     return {
       timer: null, //存储定时器
       interval: 200,//定时器间隔时间
-      transverse: 20, //横坐标方格数量
+      transverse: 30, //横坐标方格数量
       structureArray: [], //游戏布局结构数组
       moveDirection: 1, //蛇移动的方向
       nextMoveDirection: 1, // 将要移动的方向，0、1、2、3，上右下左
       snakeHead: {}, //蛇头坐标
       snakeTail: {},//蛇尾坐标
-      foodCoordinate: {}//食物坐标
+      foodCoordinate: {},//食物坐标
+      integral: 0 //积分
     }
+  },
+  components: {
+    isWarning
   },
   computed: {
     longitudinal() {
@@ -166,6 +172,8 @@ export default {
       if (state) {
         //生成食物
         this.generateFood();
+        //走积分
+        this.integralRule();
         //增加难度
         this.increaseDifficulty()
       } else {
@@ -182,6 +190,10 @@ export default {
       console.log(this.interval)
 
     },
+    integralRule() {
+      this.integral += 1
+    },
+    //蛇尾
     generateSnaKeTail() {
       let { x, y } = this.snakeTail;
       if (this.structureArray[y][x].state != 2) this.structureArray[y].splice(x, 1, { state: 0 })
@@ -240,10 +252,11 @@ export default {
       }
       return true;
     },
-    //
+    //结束游戏
     deathTreatment() {
       this.clearTimer();
-      alert('游戏结束')
+      this.integral = 0;
+      this.$store.commit('end/moveEnd');
     },
     //清除定时
     clearTimer() {
@@ -259,9 +272,9 @@ export default {
   height: 100%;
 }
 .game_wrapper {
-  margin: 40px auto;
-  width: 80%;
-  height: 80%;
+  margin: 20px auto;
+  width: 65%;
+  height: 85%;
   display: flex;
   flex-direction: column;
   background-color: aquamarine;
@@ -273,7 +286,7 @@ export default {
 }
 .block {
   flex: 1;
-  border: 1px solid #000;
+  // border: 1px solid #000;
 }
 .green {
   background-color: green;
@@ -285,6 +298,6 @@ export default {
   background-color: blue;
 }
 .black {
-  background-color: black;
+  background-color: #874521;
 }
 </style>

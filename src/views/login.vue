@@ -37,7 +37,6 @@
 </template>
 
 <script>
-
 export default {
   data() {
     var validatePass = (rule, value, callback) => {
@@ -77,13 +76,12 @@ export default {
     }
   },
   methods: {
-
     submitForm() {
 
       this.$refs.ruleForm.validate((valid) => {
         if (valid) {
 
-          this.$store.commit("longinToken", { token: "sssddf542f52gd65fdv15d" });
+          this.$store.commit("logo/longinToken", { token: "sssddf542f52gd65fdv15d" });
           this.$router.push('/Home');
 
         } else {

@@ -23,6 +23,7 @@
 </template>
 
 <script>
+
 export default {
   data() {
     return {
@@ -37,6 +38,7 @@ export default {
       foodCoordinate: {} // 食物坐标
     }
   },
+
   methods: {
     test() {
       console.log(this.$refs.container.clientHeight);

@@ -72,7 +72,7 @@ export default {
         return this.$store.state.app.mainTabs
       },
       set(val) {
-        this.$store.commit('updateMainTabs', val)
+        this.$store.commit('app/updateMainTabs', val)
       }
     },
     mainTabsActiveName: {
@@ -80,7 +80,7 @@ export default {
         return this.$store.state.app.mainTabsActiveName
       },
       set(val) {
-        this.$store.commit('updateMainTabsActiveName', val)
+        this.$store.commit('app/updateMainTabsActiveName', val)
       }
 
     }
@@ -109,8 +109,8 @@ export default {
         }
         this.mainTabs = this.mainTabs.concat(tab)
       }
-      this.mainTabsActiveName = tab.name
-      console.log(this.mainTabs)
+      this.mainTabsActiveName = tab.name;
+      // console.log(this.mainTabs)
       this.$router.push({ name: route.name })
     },
     getRefreshto(item) {
