@@ -173,6 +173,15 @@ export default {
         this.generateSnaKeTail();
       }
     },
+    //增加游戏难度
+    increaseDifficulty() {
+      if (this.interval <= 100) return;
+      this.interval -= 4;
+      this.clearTimer();
+      this.initializationTimer();
+      console.log(this.interval)
+
+    },
     generateSnaKeTail() {
       let { x, y } = this.snakeTail;
       if (this.structureArray[y][x].state != 2) this.structureArray[y].splice(x, 1, { state: 0 })
@@ -202,7 +211,6 @@ export default {
       this.snakeTail = { x, y };
       //将此坐标定义为蛇尾
       this.structureArray[y][x].state = 3;
-
     },
     //蛇的死亡规则判断
     deathRule() {
@@ -232,10 +240,14 @@ export default {
       }
       return true;
     },
-    //清除定时
+    //
     deathTreatment() {
+      this.clearTimer();
+      alert('游戏结束')
+    },
+    //清除定时
+    clearTimer() {
       clearInterval(this.timer);
-      alert('死亡')
     },
   }
 }
