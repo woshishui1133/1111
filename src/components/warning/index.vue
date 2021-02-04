@@ -2,26 +2,29 @@
   <div id="warBackground" v-show="EndBoStop" @click="moveStart()">
     <div class="war_com">
       <!-- <p class="war_text">游戏结束</p> -->
-      <img :src="require('../../assets/image'+image[1])" alt />
+      <img :src="image[index]" alt />
     </div>
   </div>
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex'
+import { mapState } from 'vuex'
 export default {
 
   data() {
     return {
       image: [
-        '/image1.jpg',
-        '/image2.jpg',
-        '/image3.jpg',
-        '/image4.jpg',
-        '/image5.jpg',
-        '/image6.jpg',
-        '/image7.jpg',
-      ]
+        require('../../assets/image/end.jpg'),
+        require('../../assets/image/end2.jpg'),
+        require('../../assets/image/end3.jpg'),
+        require('../../assets/image/end4.jpg'),
+        require('../../assets/image/end5.jpg'),
+        require('../../assets/image/end6.jpg'),
+        require('../../assets/image/end7.jpg'),
+        require('../../assets/image/end8.jpg'),
+        require('../../assets/image/end9.jpg'),
+      ],
+      index: null,
     }
   },
   computed: {
@@ -30,9 +33,26 @@ export default {
     })
 
   },
-  mounted() { console.log(this.image[2]) },
+  created() {
+
+  },
+  mounted() {
+    let _this = this;
+    _this.index = parseInt(Math.random() * 8);
+    console.log(_this.index);
+
+  },
   methods: {
-    ...mapMutations('end', { moveStart: 'moveStart' })
+    // ...mapMutations(
+    //   'end', { moveStart: 'moveStart' },
+    //   'start', { moveStart: 'Bonewgame' }),
+    moveStart() {
+      this.$store.commit("end/moveStart");
+      this.$store.commit("start/Bonewgame");
+
+    }
+
+
   },
 
 }
@@ -55,10 +75,9 @@ export default {
   line-height: 300px;
   border-radius: 8px;
 
-  .war_text {
-    font-size: 40px;
-    font-weight: bold;
-    color: red;
+  img {
+    width: 300px;
+    height: 300px;
   }
 }
 </style>

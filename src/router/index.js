@@ -51,6 +51,12 @@ const routes = [{
             component: () =>
                 import ('@/views/snake.vue')
 
+        }, {
+            name: "视频播放",
+            path: '/view',
+            component: () =>
+                import ('@/views/view.vue')
+
         }, ]
     },
     {

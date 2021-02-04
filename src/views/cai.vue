@@ -1,6 +1,11 @@
 <template>
   <div class="tetris_wrapper" ref="test">
-    <p>{{integral}}</p>
+    <!-- <div>
+      <p>{{integral}}</p>
+    </div>-->
+    <!-- <button @click="start()">开始游戏</button> -->
+
+    <is-Start></is-Start>
     <div class="game_wrapper" ref="container">
       <div class="block-group" v-for="(item,index) in structureArray" :key="index">
         <div
@@ -16,7 +21,10 @@
 </template>
 
 <script>
+import isStart from '../components/warning/start'
 import isWarning from '../components/warning/index'
+import { mapState } from 'vuex'
+
 export default {
   data() {
     return {
@@ -33,27 +41,45 @@ export default {
     }
   },
   components: {
-    isWarning
+    isWarning,
+    isStart
   },
   computed: {
+    ...mapState({
+      boStop: (state) => state.end.boStop,
+      BoScore: (state) => state.start.BoScore
+    }),
     longitudinal() {
       let boxWidth = this.$refs.container.clientWidth;
       let boxHeight = this.$refs.container.clientHeight;
       let longitudinal = parseInt((boxHeight / boxWidth) * this.transverse)
       return longitudinal
-    }
+    },
+
+
   },
   async mounted() {
 
     let _this = this;
 
-    await _this.initializationGrid();//初始化网格
-    _this.inintalizationSnake();//初始化蛇
-    _this.addKeybordEvents();//初始化键盘按下
-    _this.initializationTimer();//初始化定时器
-    _this.generateFood();//生成食物
+    _this.init();
   },
   methods: {
+    //开始
+    start() {
+      //清除定时
+      this.clearTimer();
+      this.initializationTimer();//初始化定时器
+
+    },
+    //初始化
+    init() {
+      this.initializationGrid();//初始化网格
+      this.addKeybordEvents();//初始化键盘按下
+      this.inintalizationSnake();//初始化蛇
+      this.generateFood();//生成食物
+
+    },
     //初始化网格
     initializationGrid() {
       this.structureArray = [];
@@ -74,12 +100,12 @@ export default {
       this.structureArray[2].splice(2, 1, { state: 3, code: 0 });
       this.snakeHead = { x: 4, y: 2 }; //蛇头坐标
       this.snakeTail = { x: 2, y: 2 }; //蛇尾坐标
-      console.log(this.structureArray)
+      // console.log(this.structureArray);
     },
     //键盘按下移动
     addKeybordEvents() {
       document.onkeydown = (event) => {
-        console.log(event.keyCode);
+        // console.log(event.keyCode);
         switch (event.keyCode) {
           case 38:
             this.changgeMoveDirection(0);
@@ -187,11 +213,12 @@ export default {
       this.interval -= 4;
       this.clearTimer();
       this.initializationTimer();
-      console.log(this.interval)
+      // console.log(this.interval)
 
     },
     integralRule() {
-      this.integral += 1
+      this.integral += 1;
+      this.$store.state.start.NaScore += 1;
     },
     //蛇尾
     generateSnaKeTail() {
@@ -262,6 +289,28 @@ export default {
     clearTimer() {
       clearInterval(this.timer);
     },
+  },
+  watch: {
+    boStop(curVal, oldVal) {
+      console.log(curVal, oldVal)
+      if (curVal === true) {
+        this.init();
+        this.$store.state.start.NaScore = 0;
+        //初始蛇的方向
+        this.moveDirection = 1;
+        this.nextMoveDirection = 1;
+
+      }
+    },
+    BoScore(curVal, oldVal) {
+      console.log(curVal, oldVal)
+
+      if (curVal === true) {
+        this.start();
+
+      }
+    },
+    deep: true
   }
 }
 </script>

@@ -1,9 +1,10 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import logo from './logo'
-import app from './app'
-import end from './end'
+import logo from './modules/logo'
+import app from './modules/app'
+import end from './modules/end'
+import start from './modules/start'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -14,5 +15,6 @@ export default new Vuex.Store({
         logo: logo,
         app: app,
         end: end,
+        start: start,
     }
 })

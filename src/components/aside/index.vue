@@ -59,6 +59,10 @@ export default {
         name: "贪吃蛇",
         title: "贪吃蛇",
         path: "/snake"
+      }, {
+        name: "视频播放",
+        title: "视频播放",
+        path: "/view"
       }]
 
     }

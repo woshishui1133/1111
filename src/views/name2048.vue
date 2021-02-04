@@ -1,9 +1,10 @@
 <template>
   <div>
-    <div :style="{width:cssWidth}" id="head">
+    <!-- <div :style="{width:cssWidth}" id="head">
       <p class="head_screnum">分数：{{scoreNum}}</p>
       <button class="head_button" @click="newgame()">开始新游戏</button>
-    </div>
+    </div>-->
+    <is-Start></is-Start>
     <div id="game" :style="{width:cssWidth,height:cssHeight}">
       <div v-for="(item,index) in board" :key="index+4">
         <span
@@ -31,7 +32,9 @@
 </template>
 
 <script>
+import isStart from '../components/warning/start'
 import isWarning from '../components/warning'
+import { mapState } from 'vuex'
 
 export default {
   data() {
@@ -69,9 +72,13 @@ export default {
     }
   },
   components: {
-    isWarning
+    isWarning,
+    isStart
   },
   computed: {
+    ...mapState({
+      boStop: (state) => state.end.boStop
+    }),
     cssWidth() {
       return (this.WIDTH * (this.CELL_SIZE + this.MARGIN) + this.MARGIN) + "px";
     },
@@ -421,41 +428,47 @@ export default {
     isFull() {
       return this.board.filter(e => e).length > 15;
     },
-
-
+  },
+  wacth: {
+    boStop(curVal, oldVal) {
+      console.log(curVal, oldVal);
+      if (curVal) {
+        this.newgame();
+      }
+    }
   }
 
 }
 </script>
 
 <style lang='scss' scoped>
-#head {
-  margin: 0 auto;
-  height: 120px;
-  // border: 1px solid;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  .head_screnum {
-    font-size: 20px;
-    font-weight: bold;
-    width: 200px;
-  }
-  .head_button {
-    width: 120px;
-    height: 40px;
+// #head {
+//   margin: 0 auto;
+//   height: 120px;
+//   // border: 1px solid;
+//   display: flex;
+//   align-items: center;
+//   justify-content: space-around;
+//   .head_screnum {
+//     font-size: 20px;
+//     font-weight: bold;
+//     width: 200px;
+//   }
+//   .head_button {
+//     width: 120px;
+//     height: 40px;
 
-    color: white;
+//     color: white;
 
-    border: none;
-    border-radius: 8px;
-    background: #c66f35;
-    outline: none;
-  }
-  .head_button:hover {
-    background: #874521;
-  }
-}
+//     border: none;
+//     border-radius: 8px;
+//     background: #c66f35;
+//     outline: none;
+//   }
+//   .head_button:hover {
+//     background: #874521;
+//   }
+// }
 #game {
   position: relative;
   border-radius: 10px;
